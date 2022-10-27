@@ -404,6 +404,7 @@ uint32_t Random::Generate(uint32_t range) {
 // GTestIsInitialized() returns true if and only if the user has initialized
 // Google Test.  Useful for catching the user mistake of not initializing
 // Google Test before calling RUN_ALL_TESTS().
+// 当且仅当用户已经初始化gtest之后，该函数会返回true。
 static bool GTestIsInitialized() { return GetArgvs().size() > 0; }
 
 // Iterates over a vector of TestSuites, keeping a running sum of the
@@ -609,6 +610,7 @@ void TypeParameterizedTestSuiteRegistry::CheckForInstantiations() {
 // A copy of all command line arguments.  Set by InitGoogleTest().
 static ::std::vector<std::string> g_argvs;
 
+// 获取的g_argvs的拷贝
 ::std::vector<std::string> GetArgvs() {
 #if defined(GTEST_CUSTOM_GET_ARGVS_)
   // GTEST_CUSTOM_GET_ARGVS_() may return a container of std::string or
@@ -6588,6 +6590,8 @@ static void LoadFlagsFromFile(const std::string& path) {
 // Parses the command line for Google Test flags, without initializing
 // other parts of Google Test.  The type parameter CharType can be
 // instantiated to either char or wchar_t.
+// 解析gtest的flag的命令行，不初始化gtest的其他部分。
+// 参数chanType的类型，可以实例化为char或者wchar_t
 template <typename CharType>
 void ParseGoogleTestFlagsOnlyImpl(int* argc, CharType** argv) {
   std::string flagfile_value;
@@ -6685,12 +6689,16 @@ void ParseGoogleTestFlagsOnly(int* argc, wchar_t** argv) {
 template <typename CharType>
 void InitGoogleTestImpl(int* argc, CharType** argv) {
   // We don't want to run the initialization code twice.
+  // 如果gtest已经初始化完毕了，直接返回
   if (GTestIsInitialized()) return;
 
+  // *argc不知道什么意思
   if (*argc <= 0) return;
 
+  // g_argvs是一个vector类型的数据，clear是vector的一个方法
   g_argvs.clear();
   for (int i = 0; i != *argc; i++) {
+    // 将获得的参数，添加到g_argvs
     g_argvs.push_back(StreamableToString(argv[i]));
   }
 
@@ -6704,6 +6712,7 @@ void InitGoogleTestImpl(int* argc, CharType** argv) {
       {{"@D", ""}, {"@R", ""}, {"@G", ""}, {"@Y", ""}, {"@@", "@"}}));
 #endif  // GTEST_HAS_ABSL
 
+  // 解析googletest的标志
   ParseGoogleTestFlagsOnly(argc, argv);
   GetUnitTestImpl()->PostFlagParsingInit();
 }
