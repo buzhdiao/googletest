@@ -1,7 +1,12 @@
 # Advanced googletest Topics
+高级googleTest 话题
 
 ## Introduction
+## 介绍
 
+现在，你已经阅读了googletest prime, 学到了怎么使用googletest写测试，现在是时候学习一些技巧。
+这篇文档将会向你展示更过的断言，同时也会展示如何构建复杂的错误信息，传出致命错误。复用和加速你的
+测试夹具，以及为你的测试使用多种标志。 
 Now that you have read the [googletest Primer](primer.md) and learned how to
 write tests using googletest, it's time to learn some new tricks. This document
 will show you more assertions as well as how to construct complex failure
@@ -9,21 +14,23 @@ messages, propagate fatal failures, reuse and speed up your test fixtures, and
 use various flags with your tests.
 
 ## More Assertions
+## 更多的断言
 
 This section covers some less frequently used, but still significant,
 assertions.
+本小节覆盖了一些低频率使用，但是很重要的断言。
 
-### Explicit Success and Failure
+### Explicit Success and Failure 明确的成功和失败
 
 See [Explicit Success and Failure](reference/assertions.md#success-failure) in
 the Assertions Reference.
 
-### Exception Assertions
+### Exception Assertions 异常断言
 
 See [Exception Assertions](reference/assertions.md#exceptions) in the Assertions
 Reference.
 
-### Predicate Assertions for Better Error Messages
+### Predicate Assertions for Better Error Messages 谓词断言以获得更好的错误消息
 
 Even though googletest has a rich set of assertions, they can never be complete,
 as it's impossible (nor a good idea) to anticipate all scenarios a user might
