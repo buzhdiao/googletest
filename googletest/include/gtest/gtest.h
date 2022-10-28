@@ -1092,36 +1092,48 @@ class GTEST_API_ TestEventListeners {
 };
 
 // A UnitTest consists of a vector of TestSuites.
+//  一个单元测试类包含一个测试套的向量
 //
 // This is a singleton class.  The only instance of UnitTest is
 // created when UnitTest::GetInstance() is first called.  This
 // instance is never deleted.
+// 这是一个单例类，唯一的unitTest实例是在 UnitTest::GetInstance()第1次被调用的时候创建的
+// 这个实例永远不会删除
 //
 // UnitTest is not copyable.
+// unittest是不可拷贝的
 //
 // This class is thread-safe as long as the methods are called
 // according to their specification.
+// 这个类是一个线程安全的。只要这个类按照他们的规格被调用
 class GTEST_API_ UnitTest {
  public:
   // Gets the singleton UnitTest object.  The first time this method
   // is called, a UnitTest object is constructed and returned.
   // Consecutive calls will return the same object.
+  // 获取单例unitTest对象，这个方法第1次被调用的时候，一个unitTest对象被创建并返回。
+  // 连续的调用将返回相同的对象
   static UnitTest* GetInstance();
 
   // Runs all tests in this UnitTest object and prints the result.
   // Returns 0 if successful, or 1 otherwise.
+  // 在unitTest中运行所有的测试，并且打印结果。执行成功的时候返回0，否则返回1
   //
   // This method can only be called from the main thread.
+  // 这个函数只能在主线程中被调用
   //
   // INTERNAL IMPLEMENTATION - DO NOT USE IN A USER PROGRAM.
+  // 内部实现-不要在用户程序中使用。
   int Run() GTEST_MUST_USE_RESULT_;
 
   // Returns the working directory when the first TEST() or TEST_F()
   // was executed.  The UnitTest object owns the string.
+  // 当第1个Test或者Test_f被调用的时候，返回工作目录。unitTest对象拥有这个字符串。
   const char* original_working_dir() const;
 
   // Returns the TestSuite object for the test that's currently running,
   // or NULL if no test is running.
+  // 返回当前正在运行的Testsuite对象，如果没有测试在被执行，就返回空
   const TestSuite* current_test_suite() const GTEST_LOCK_EXCLUDED_(mutex_);
 
 // Legacy API is still available but deprecated
@@ -1131,6 +1143,7 @@ class GTEST_API_ UnitTest {
 
   // Returns the TestInfo object for the test that's currently running,
   // or NULL if no test is running.
+  // 返回当前正在执行的测试的TestInfo 对象，如果没有测试在被执行，就返回NULL
   const TestInfo* current_test_info() const GTEST_LOCK_EXCLUDED_(mutex_);
 
   // Returns the random seed used at the start of the current test run.
@@ -1138,22 +1151,28 @@ class GTEST_API_ UnitTest {
 
   // Returns the ParameterizedTestSuiteRegistry object used to keep track of
   // value-parameterized tests and instantiate and register them.
+  // 返回ParameterizedTestSuiteRegistry对象用于跟踪参数化测试的总结，实例化并且注册他们
   //
   // INTERNAL IMPLEMENTATION - DO NOT USE IN A USER PROGRAM.
+  // 内部接口，用户程序不要调用
   internal::ParameterizedTestSuiteRegistry& parameterized_test_registry()
       GTEST_LOCK_EXCLUDED_(mutex_);
 
   // Gets the number of successful test suites.
+  // 返回成功的测试永凯的数量
   int successful_test_suite_count() const;
 
   // Gets the number of failed test suites.
+  // 返回失败的测试用例的数量
   int failed_test_suite_count() const;
 
   // Gets the number of all test suites.
+  // 返回全部测试用例的数量
   int total_test_suite_count() const;
 
   // Gets the number of all test suites that contain at least one test
   // that should run.
+  // 返回全部的测试套的数量，这些测试要至少有一个测试应该被执行
   int test_suite_to_run_count() const;
 
   //  Legacy API is deprecated but still available
@@ -1165,46 +1184,59 @@ class GTEST_API_ UnitTest {
 #endif  //  GTEST_REMOVE_LEGACY_TEST_CASEAPI_
 
   // Gets the number of successful tests.
+  // 获取成功的测试数量
   int successful_test_count() const;
 
   // Gets the number of skipped tests.
+  // 返回跳过的测试数量
   int skipped_test_count() const;
 
   // Gets the number of failed tests.
+  // 返回失败的测试数量
   int failed_test_count() const;
 
   // Gets the number of disabled tests that will be reported in the XML report.
+  // 获取那些不使能的测试,但是会在xml报告中体现的测试的数量
   int reportable_disabled_test_count() const;
 
   // Gets the number of disabled tests.
+  // 返回不使能的测试的数量
   int disabled_test_count() const;
 
   // Gets the number of tests to be printed in the XML report.
+  // 获取应该在xml报告中体现的测试的数量
   int reportable_test_count() const;
 
   // Gets the number of all tests.
+  // 返回全部的测试用例
   int total_test_count() const;
 
   // Gets the number of tests that should run.
+  // 获取应该被执行的测试的数量
   int test_to_run_count() const;
 
   // Gets the time of the test program start, in ms from the start of the
   // UNIX epoch.
+  // 获取测试程序的开始时间，从UNIX纪元开始，以毫秒为单位。
   TimeInMillis start_timestamp() const;
 
   // Gets the elapsed time, in milliseconds.
+  // 获取所用时间（毫秒）。
   TimeInMillis elapsed_time() const;
 
   // Returns true if and only if the unit test passed (i.e. all test suites
   // passed).
+  // 当且仅当单元测试执行通过的时候，返回true
   bool Passed() const;
 
   // Returns true if and only if the unit test failed (i.e. some test suite
   // failed or something outside of all tests failed).
+  // 当且仅当单元测试执行失败的时候返回true,
   bool Failed() const;
 
   // Gets the i-th test suite among all the test suites. i can range from 0 to
   // total_test_suite_count() - 1. If i is not in that range, returns NULL.
+  // 获取第几个测试用例失败了，如果i不在区间里面，就返回NULL
   const TestSuite* GetTestSuite(int i) const;
 
 //  Legacy API is deprecated but still available
@@ -1214,10 +1246,12 @@ class GTEST_API_ UnitTest {
 
   // Returns the TestResult containing information on test failures and
   // properties logged outside of individual test suites.
+  // 返回TestResult，其中包含有关测试失败的信息以及在各个测试套件之外记录的属性。
   const TestResult& ad_hoc_test_result() const;
 
   // Returns the list of event listeners that can be used to track events
   // inside Google Test.
+  // 返回事件监听器列表，这些列表可以被用于跟踪Gtest中的事件
   TestEventListeners& listeners();
 
  private:
@@ -1226,8 +1260,11 @@ class GTEST_API_ UnitTest {
   // the order they were registered.  After all tests in the program
   // have finished, all global test environments will be torn-down in
   // the *reverse* order they were registered.
+  // 注册并返回一个全局的测试环境，当一个测试程序被执行的时候，所有的全局测试环境将被按照注册的顺序被执行。
+  // 在程序中的所有测试都被执行完毕以后，所有的全局测试环境将被解除，按照他们注册的相反的顺序
   //
   // The UnitTest object takes ownership of the given environment.
+  // UnitTest对象拥有给定环境的所有权。
   //
   // This method can only be called from the main thread.
   Environment* AddEnvironment(Environment* env);
