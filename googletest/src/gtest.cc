@@ -5375,10 +5375,13 @@ void UnitTest::RecordProperty(const std::string& key,
 
 // Runs all tests in this UnitTest object and prints the result.
 // Returns 0 if successful, or 1 otherwise.
+// 运行unitTest对象中的所有测试，并且打印出结果，如果成功了，就返回0，否则返回1
 //
 // We don't protect this under mutex_, as we only support calling it
 // from the main thread.
+// 我们不适用mutex进行报错，因为只支持在主线程中调用这个程序
 int UnitTest::Run() {
+  // FLAGS_gtest_internal_run_death_test
   const bool in_death_test_child_process =
       GTEST_FLAG_GET(internal_run_death_test).length() > 0;
 

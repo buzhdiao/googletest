@@ -1,34 +1,10 @@
 // Copyright 2009 Google Inc. All Rights Reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//     * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//     * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//     * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 // This sample shows how to use Google Test listener API to implement
 // an alternative console output and how to use the UnitTest reflection API
 // to enumerate test suites and tests and to inspect their results.
+// 此示例演示如何使用GoogleTest侦听器API实现替代控制台输出，
+// 以及如何使用UnitTest反射API枚举测试套件和测试并检查其结果。
 
 #include <stdio.h>
 
@@ -45,12 +21,15 @@ using ::testing::UnitTest;
 namespace {
 // Provides alternative output mode which produces minimal amount of
 // information about tests.
+// 提供替代输出模式，该模式可产生最少的测试信息。
 class TersePrinter : public EmptyTestEventListener {
  private:
   // Called before any test activity starts.
+  // 在任何测试活动开始之前调用。
   void OnTestProgramStart(const UnitTest& /* unit_test */) override {}
 
   // Called after all test activities have ended.
+  // 在所有测试活动结束后调用。
   void OnTestProgramEnd(const UnitTest& unit_test) override {
     fprintf(stdout, "TEST %s\n", unit_test.Passed() ? "PASSED" : "FAILED");
     fflush(stdout);
@@ -109,6 +88,7 @@ int main(int argc, char** argv) {
 
   // If we are given the --terse_output command line flag, suppresses the
   // standard output and attaches own result printer.
+  // 如果我们被赋予--terse_output命令行标志，则禁止标准输出并连接自己的结果打印机。
   if (terse_output) {
     TestEventListeners& listeners = unit_test.listeners();
 

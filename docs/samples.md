@@ -7,11 +7,14 @@ The sample directory has a number of well-commented samples showing how to use a
 variety of googletest features.
 gtest的例子里面，有很多注释完好的用例，这些用例展示了如何使用gtest的众多特性
 
+*  样例1展示了使用gtest去测试c++程序的基本步骤
 *   Sample #1 shows the basic steps of using googletest to test C++ functions.
+*   样例3展示一个更加复杂类的单元测试，这个类包含多个成员函数
 *   Sample #2 shows a more complex unit test for a class with multiple member
     functions.
 *   第3个用例展示了测试夹具
 *   Sample #3 uses a test fixture.
+*   样例4将会告诉你怎么使用gtest和头文件去更好的使用库
 *   Sample #4 teaches you how to use googletest and `googletest.h` together to
     get the best of both libraries.
 *   示例#5将共享测试逻辑放在基础测试夹具中，并在派生夹具中重用它。
