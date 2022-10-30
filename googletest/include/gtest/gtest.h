@@ -661,14 +661,18 @@ class GTEST_API_ TestInfo {
 };
 
 // A test suite, which consists of a vector of TestInfos.
+// 一个测试套件，由一个TestInfo向量组成。
 //
 // TestSuite is not copyable.
+// TestSuite不可复制。
 class GTEST_API_ TestSuite {
  public:
   // Creates a TestSuite with the given name.
+  // 创建具有给定名称的TestSuite。
   //
   // TestSuite does NOT have a default constructor.  Always use this
   // constructor to create a TestSuite object.
+  // TestSuite没有默认构造函数。始终使用此构造函数创建TestSuite对象。
   //
   // Arguments:
   //

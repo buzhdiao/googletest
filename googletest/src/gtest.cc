@@ -5019,6 +5019,7 @@ void OsStackTraceGetter::UponLeavingGTest() GTEST_LOCK_EXCLUDED_(mutex_) {
 
 // A helper class that creates the premature-exit file in its
 // constructor and deletes the file in its destructor.
+// 一个辅助类,这个辅助类创建一个过早退出文件,在它的构造函数中,一个在它的析构函数中,删除这个文件
 class ScopedPrematureExitFile {
  public:
   explicit ScopedPrematureExitFile(const char* premature_exit_filepath)
@@ -5387,16 +5388,23 @@ int UnitTest::Run() {
 
   // Google Test implements this protocol for catching that a test
   // program exits before returning control to Google Test:
+// Google Test实现了此协议，用于在将控制权返回到Google Test之前捕获测试程序退出：
   //
   //   1. Upon start, Google Test creates a file whose absolute path
   //      is specified by the environment variable
   //      TEST_PREMATURE_EXIT_FILE.
+  //   1. 在刚开始的时候，google test创建一个文件，这个文件的绝对路径是通过TEST_PREMATURE_EXIT_FILE
+      // 环境变量指定的
   //   2. When Google Test has finished its work, it deletes the file.
+  //   2. 当googleTest 完成了这个工作的时候，它删除这个文件
   //
   // This allows a test runner to set TEST_PREMATURE_EXIT_FILE before
   // running a Google-Test-based test program and check the existence
   // of the file at the end of the test execution to see if it has
   // exited prematurely.
+  // 在将允许一个基于gooletest的测试程序在运行之前设置TEST_PREMATURE_EXIT_FILE，
+  // 并且在程序执行结束之后，检查这个文件是否存在，来看程序是否提前退出
+  //这允许测试运行程序在之前设置test_PREMATURE_EXIT_FILE
 
   // If we are in the child process of a death test, don't
   // create/delete the premature exit file, as doing so is unnecessary
@@ -5406,6 +5414,11 @@ int UnitTest::Run() {
   // premature-exit file will be left undeleted, causing a test runner
   // that understands the premature-exit-file protocol to report the
   // test as having failed.
+// 如果我们在死亡测试的子进程中，不要创建/删除过早退出文件，因为这样做是不必要的，
+// 并且会混淆父进程。否则，在进入/离开此功能时创建/删除文件。如果程序在该函数返回之前以某种方式退出，
+// 则过早退出文件将保持未删除状态，导致理解过早退出文件协议的测试运行程序报告测试失败。
+
+// 如果是在死亡测试子程序中,就传值为空指针,否则,就传递环境编程给构造函数中
   const internal::ScopedPrematureExitFile premature_exit_file(
       in_death_test_child_process
           ? nullptr
@@ -5413,6 +5426,7 @@ int UnitTest::Run() {
 
   // Captures the value of GTEST_FLAG(catch_exceptions).  This value will be
   // used for the duration of the program.
+  // 捕获GTEST_FLAG(catch_exceptions)的值,这个值将被用于程序的生命周期里面
   impl()->set_catch_exceptions(GTEST_FLAG_GET(catch_exceptions));
 
 #if GTEST_OS_WINDOWS
@@ -5467,12 +5481,14 @@ int UnitTest::Run() {
 
 // Returns the working directory when the first TEST() or TEST_F() was
 // executed.
+// 当第1个Test()或者TEst_f()被执行的时候，返回工作目录
 const char* UnitTest::original_working_dir() const {
   return impl_->original_working_dir_.c_str();
 }
 
 // Returns the TestSuite object for the test that's currently running,
 // or NULL if no test is running.
+// 返回当前正在运行的测试的TestSuite对象，如果没有测试正在运行，则返回NULL。
 const TestSuite* UnitTest::current_test_suite() const
     GTEST_LOCK_EXCLUDED_(mutex_) {
   internal::MutexLock lock(&mutex_);
@@ -5490,6 +5506,7 @@ const TestCase* UnitTest::current_test_case() const
 
 // Returns the TestInfo object for the test that's currently running,
 // or NULL if no test is running.
+// 返回当前正在运行的测试的TestInfo对象，如果没有测试正在运行，则返回NULL。
 const TestInfo* UnitTest::current_test_info() const
     GTEST_LOCK_EXCLUDED_(mutex_) {
   internal::MutexLock lock(&mutex_);
@@ -5497,19 +5514,23 @@ const TestInfo* UnitTest::current_test_info() const
 }
 
 // Returns the random seed used at the start of the current test run.
+// 返回当前测试运行开始时使用的随机种子。
 int UnitTest::random_seed() const { return impl_->random_seed(); }
 
 // Returns ParameterizedTestSuiteRegistry object used to keep track of
 // value-parameterized tests and instantiate and register them.
+// 返回ParameterizedTestSuiteRegistry对象，用于跟踪参数化测试的值并实例化和注册它们。
 internal::ParameterizedTestSuiteRegistry&
 UnitTest::parameterized_test_registry() GTEST_LOCK_EXCLUDED_(mutex_) {
   return impl_->parameterized_test_registry();
 }
 
 // Creates an empty UnitTest.
+// 创建空的UnitTest。
 UnitTest::UnitTest() { impl_ = new internal::UnitTestImpl(this); }
 
 // Destructor of UnitTest.
+// UnitTest的析构函数。
 UnitTest::~UnitTest() { delete impl_; }
 
 // Pushes a trace defined by SCOPED_TRACE() on to the per-thread

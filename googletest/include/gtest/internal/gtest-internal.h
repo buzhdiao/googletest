@@ -487,6 +487,7 @@ GTEST_API_ AssertionResult IsHRESULTFailure(const char* expr,
 using SetUpTestSuiteFunc = void (*)();
 using TearDownTestSuiteFunc = void (*)();
 
+// 记录了文件名和行号
 struct CodeLocation {
   CodeLocation(const std::string& a_file, int a_line)
       : file(a_file), line(a_line) {}
