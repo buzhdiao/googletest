@@ -534,6 +534,8 @@ class ParameterizedTestSuiteInfo : public ParameterizedTestSuiteInfoBase {
   }
   // INSTANTIATE_TEST_SUITE_P macro uses AddGenerator() to record information
   // about a generator.
+// INSTANTIATE_TEST_SUITE_P宏使用AddGenerator（）记录有关生成器的信息。
+// 4个参数分别是实例名称，生成器函数，参数名称生成器函数，文件名称，文件行号
   int AddTestSuiteInstantiation(const std::string& instantiation_name,
                                 GeneratorCreationFunc* func,
                                 ParamNameGeneratorFunc* name_func,
@@ -633,6 +635,8 @@ class ParameterizedTestSuiteInfo : public ParameterizedTestSuiteInfoBase {
   // Records data received from INSTANTIATE_TEST_SUITE_P macros:
   //  <Instantiation name, Sequence generator creation function,
   //     Name generator function, Source file, Source line>
+  // 记录从INSTANTIATE_TEST_SUITE_P宏接收的数据：
+  // <实例化名称，序列生成器创建函数，名称生成器函数，源文件，源行>
   struct InstantiationInfo {
     InstantiationInfo(const std::string& name_in,
                       GeneratorCreationFunc* generator_in,
@@ -686,9 +690,12 @@ using ParameterizedTestCaseInfo = ParameterizedTestSuiteInfo<TestCase>;
 // ParameterizedTestSuiteInfoBase classes accessed by test suite names. TEST_P
 // and INSTANTIATE_TEST_SUITE_P macros use it to locate their corresponding
 // ParameterizedTestSuiteInfo descriptors.
+// ParameterizedTestSuiteRegistry包含由测试套件名称访问的ParameterisedTestSuiteInfoBase类的映射。
+// TEST_P和INSTANTIATE_TEST_SUITE_P宏使用它来定位它们对应的ParameterizedTestSuiteInfo描述符。
 class ParameterizedTestSuiteRegistry {
  public:
   ParameterizedTestSuiteRegistry() {}
+  // 析构的时候,删除所有的test_suite_info
   ~ParameterizedTestSuiteRegistry() {
     for (auto& test_suite_info : test_suite_infos_) {
       delete test_suite_info;
@@ -697,6 +704,7 @@ class ParameterizedTestSuiteRegistry {
 
   // Looks up or creates and returns a structure containing information about
   // tests and instantiations of a particular test suite.
+  // 查找或创建并返回包含特定测试套件的测试和实例化信息的结构。
   template <class TestSuite>
   ParameterizedTestSuiteInfo<TestSuite>* GetTestSuitePatternHolder(
       const char* test_suite_name, CodeLocation code_location) {
